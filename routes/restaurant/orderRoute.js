@@ -1,5 +1,5 @@
 import express from "express";
-import { createOrder,findById,deleteOrder , findOrderLast , getOrder , updateStatusOrder, searchOrders } from "../../controller/restaurant/orderController.js";
+import { createOrder,findById,deleteOrder , findOrderLast , getOrder , updateStatusOrder, searchOrders, getOrderRealtime } from "../../controller/restaurant/orderController.js";
 
 const router = express.Router();
 
@@ -10,5 +10,6 @@ router.delete("/delete/:id", deleteOrder);
 router.get("/find/all/:store_id", getOrder);
 router.put("/updateStatus/:id", updateStatusOrder);
 router.get("/search/:store_id", searchOrders);
+router.get("/find/realtime/:store_id", getOrderRealtime);
 
 export default router;

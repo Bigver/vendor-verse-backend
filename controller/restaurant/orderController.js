@@ -197,3 +197,19 @@ export const searchOrders = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+export const getOrderRealtime = async (req, res) => {
+  const { store_id } = req.params;
+  try {
+    const orderData = await OrderRestaurant.findAll({
+      where: { store_id: store_id ,  payment_status : "กำลังตรวจสอบ"},
+    });
+    if (!orderData) {
+      return res.status(404).json({ message: "order not found" });
+    }
+    res.status(200).json(orderData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
