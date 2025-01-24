@@ -120,7 +120,7 @@ export const forgotPassword = async (req, res) => {
     user.passwordResetExpires = Date.now() + 3600000; // 1 ชั่วโมง
     await user.save();
 
-    const resetURL = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetURL = `https://vendor-verse-app.vercel.app/reset-password/${resetToken}`;
     await sendEmail({
       to: user.email,
       subject: 'Password Reset Request',
