@@ -59,6 +59,9 @@ const PageEdit = sequelize.define(
         await Footer.create({
           page_id: page.id,
         });
+        await Shipping.create({
+          page_id: page.id,
+        });
       },
     },
   }
@@ -457,6 +460,7 @@ const Section6 = sequelize.define(
   }
 );
 
+
 const Footer = sequelize.define(
   "footers",
   {
@@ -504,6 +508,37 @@ const Footer = sequelize.define(
   }
 );
 
+const Shipping = sequelize.define(
+  "shippings",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    page_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: PageEdit,
+        key: "id",
+      },
+    },
+    transportation_company: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: "Kerry",
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 40,
+    },
+  },
+  {
+    timestamps: false, // ปิดการสร้างคอลัมน์ createdAt และ updatedAt
+  }
+);
+
 StoreOwner.hasOne(PageEdit, { foreignKey: "store_id" }); // ร้านค้าหนึ่งมีหนึ่งเพจ
 PageEdit.belongsTo(StoreOwner, { foreignKey: "store_id", as: "storeOwner" }); // หน้าเพจเชื่อมกับร้านค้า
 
@@ -531,6 +566,9 @@ Section6.belongsTo(PageEdit, { foreignKey: "page_id", as: "page" });
 PageEdit.hasOne(Footer, { foreignKey: "page_id", as: "footer" });
 Footer.belongsTo(PageEdit, { foreignKey: "page_id", as: "page" });
 
+PageEdit.hasOne(Shipping, { foreignKey: "page_id", as: "shipping" });
+Shipping.belongsTo(PageEdit, { foreignKey: "page_id", as: "page" });
+
 export {
   PageEdit,
   Navbar,
@@ -541,4 +579,5 @@ export {
   Section5,
   Section6,
   Footer,
+  Shipping
 };

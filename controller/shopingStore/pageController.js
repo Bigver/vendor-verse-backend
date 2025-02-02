@@ -10,6 +10,7 @@ import {
   Section4,
   Section5,
   Section6,
+  Shipping,
 } from "../../model/shopingStore/pageModel.js";
 import Product from "../../model/shopingStore/productModel.js";
 
@@ -62,7 +63,7 @@ export const getPage = async (req, res) => {
         {
           model: Section5,
           as: "section5", // เชื่อมโยงกับ Section โดยใช้อัลเลียส sections
-        },
+        }, 
         {
           model: Section6,
           as: "section6", // เชื่อมโยงกับ Section โดยใช้อัลเลียส sections
@@ -74,6 +75,10 @@ export const getPage = async (req, res) => {
         {
           model: StoreOwner,
           as: "storeOwner", // เชื่อมโยงกับ Owner โดยใช้อัลเลียส owner
+        },
+        {
+          model: Shipping,
+          as: "shipping", // เชื่อมโยงกับ Owner โดยใช้อัลเลียส owner
         },
       ],
     });
@@ -332,6 +337,32 @@ export const editPageFooter = async (req, res) => {
   }
 };
 
+export const editShipping = async (req, res) => {
+  const { id } = req.params;
+  const { transportation_company , price } = req.body;
+  try {
+    const page = await PageEdit.findOne({
+      where: { store_id: id },
+    });
+    if (!page) {
+      return res.status(404).json({ message: "found" });
+    }
+    const shipping = await Shipping.findOne({
+      where: { page_id : page.id },
+    });
+    if (!shipping) {
+      return res.status(404).json({ message: "found" });
+    }
+    await shipping.update({
+      transportation_company : transportation_company,
+      price : price
+    });
+    res.status(200).json(shipping);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 export const getCatagory = async (req, res) => {
   const store_id = req.params.store_id;
   try {
@@ -394,7 +425,6 @@ export const selectTemplate = async (req, res) => {
       !Section6Data ||
       !FooterData
     ) {
-      console.log(error)
       return res.status(404).json({ message: "found" });
     }
 
