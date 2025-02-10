@@ -247,7 +247,7 @@ export const editPageSection5 = async (req, res) => {
     text_color,
     background_color,
     title,
-    deatil,
+    detail,
     image,
     use_section,
   } = req.body;
@@ -262,7 +262,7 @@ export const editPageSection5 = async (req, res) => {
       text_color,
       background_color,
       title,
-      deatil,
+      detail,
       image,
       use_section,
     });
