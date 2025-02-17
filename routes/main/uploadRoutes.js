@@ -21,14 +21,13 @@ router.post("/slipok", upload.single("files"), async (req, res) => {
         "x-authorization": process.env.API_SLIPOK_KEY,
       },
     });
-
     const paymentData = await Payment.findAll(
       {
         where : { trans_ref : response.data.data.transRef }, 
       }
     );
-    
-    if(paymentData){
+
+    if(paymentData.length !== 0){
       return res.status(400).json({ message: "สลิปนี้มีการใช้งานแล้ว" });
     }
 
