@@ -533,6 +533,21 @@ const Shipping = sequelize.define(
       allowNull: false,
       defaultValue: 40,
     },
+    bank_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: "กสิกรไทย",
+    },
+    bank_number: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: "65xxxxxxx",
+    },
+    bank_fullname: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: "มานะ xxxx",
+    },
   },
   {
     timestamps: false, // ปิดการสร้างคอลัมน์ createdAt และ updatedAt

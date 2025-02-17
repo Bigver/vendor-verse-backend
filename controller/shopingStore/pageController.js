@@ -339,7 +339,7 @@ export const editPageFooter = async (req, res) => {
 
 export const editShipping = async (req, res) => {
   const { id } = req.params;
-  const { transportation_company , price } = req.body;
+  const { transportation_company , price , bank_name , bank_number , bank_fullname } = req.body;
   try {
     const page = await PageEdit.findOne({
       where: { store_id: id },
@@ -355,7 +355,10 @@ export const editShipping = async (req, res) => {
     }
     await shipping.update({
       transportation_company : transportation_company,
-      price : price
+      price : price,
+      bank_name : bank_name,
+      bank_number : bank_number,
+      bank_fullname : bank_fullname
     });
     res.status(200).json(shipping);
   } catch (error) {
